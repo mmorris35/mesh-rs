@@ -119,7 +119,10 @@ pub fn sign_revocation(identity: &NodeIdentity, revocation: &mut Revocation) -> 
     let timestamp = Utc::now().timestamp_millis();
     let mut rev_value = serde_json::to_value(&*revocation)
         .map_err(|e| MeshError::SerializationError(e.to_string()))?;
-    rev_value.as_object_mut().unwrap().remove("signature");
+    rev_value
+        .as_object_mut()
+        .expect("struct serializes to object")
+        .remove("signature");
     let canonical = canonicalize(&rev_value)?;
     let signature = identity.signing_key().sign(canonical.as_bytes());
 
@@ -146,7 +149,10 @@ pub fn verify_revocation(revocation: &Revocation) -> MeshResult<()> {
 
     let mut rev_value = serde_json::to_value(revocation)
         .map_err(|e| MeshError::SerializationError(e.to_string()))?;
-    rev_value.as_object_mut().unwrap().remove("signature");
+    rev_value
+        .as_object_mut()
+        .expect("struct serializes to object")
+        .remove("signature");
     let canonical = canonicalize(&rev_value)?;
 
     verify_raw_signature(canonical.as_bytes(), sig_block)

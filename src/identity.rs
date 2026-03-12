@@ -102,7 +102,10 @@ impl NodeIdentity {
 
         // Serialize to Value, remove signature, canonicalize, sign
         let mut value = serde_json::to_value(&doc)?;
-        value.as_object_mut().unwrap().remove("signature");
+        value
+            .as_object_mut()
+            .expect("struct serializes to object")
+            .remove("signature");
         let canonical = canonicalize(&value)?;
         let sig = self.signing_key.sign(canonical.as_bytes());
         doc.signature = BASE64.encode(sig.to_bytes());
@@ -155,7 +158,10 @@ impl IdentityDocument {
 
         // Reconstruct the canonical payload (without the signature field)
         let mut value = serde_json::to_value(self)?;
-        value.as_object_mut().unwrap().remove("signature");
+        value
+            .as_object_mut()
+            .expect("struct serializes to object")
+            .remove("signature");
         let canonical = canonicalize(&value)?;
 
         // Decode and verify the signature

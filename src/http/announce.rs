@@ -3,6 +3,8 @@ use std::sync::Arc;
 use axum::extract::State;
 use axum::response::IntoResponse;
 use axum::Json;
+use chrono::Utc;
+use ed25519_dalek::VerifyingKey;
 
 use crate::envelope::MeshEnvelope;
 use crate::error::MeshError;
@@ -11,6 +13,9 @@ use crate::storage::MeshStorage;
 use crate::types::{PublicationAnnouncement, RecordType, RevocationAnnouncement, TrustLevel};
 
 use super::MeshState;
+
+/// Maximum allowed clock skew for envelope timestamps (±1 hour).
+const TIMESTAMP_WINDOW_MS: i64 = 3_600_000;
 
 pub async fn post_announce(
     State(state): State<Arc<MeshState>>,
@@ -30,7 +35,28 @@ pub async fn post_announce(
         return Err(MeshError::UntrustedNode(envelope.sender.clone()));
     }
 
-    // 3. Process based on message type
+    // 3. Verify envelope signature using sender's public key (derived from node_id)
+    let pk_bytes = bs58::decode(&peer.node_id)
+        .into_vec()
+        .map_err(|_| MeshError::InvalidSignature)?;
+    let pk_array: [u8; 32] = pk_bytes
+        .try_into()
+        .map_err(|_| MeshError::InvalidSignature)?;
+    let verifying_key =
+        VerifyingKey::from_bytes(&pk_array).map_err(|_| MeshError::InvalidSignature)?;
+    envelope.verify_signature_with_key(&verifying_key)?;
+
+    // 4. Validate envelope timestamp is within acceptable window (±1 hour)
+    let now = Utc::now().timestamp_millis();
+    let drift = (envelope.timestamp - now).abs();
+    if drift > TIMESTAMP_WINDOW_MS {
+        return Err(MeshError::InvalidRequest(format!(
+            "envelope timestamp too far from current time (drift: {}ms)",
+            drift
+        )));
+    }
+
+    // 5. Process based on message type
     match envelope.msg_type.as_str() {
         "publication" => {
             let announcement: PublicationAnnouncement =

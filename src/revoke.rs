@@ -102,7 +102,7 @@ impl Revoker {
         let mut results = Vec::new();
 
         for peer in &peers {
-            let url = format!("{}/mesh/revoke", peer.endpoint.trim_end_matches('/'));
+            let url = format!("{}/mesh/v1/announce", peer.endpoint.trim_end_matches('/'));
             let result = self
                 .http_client
                 .post(&url)

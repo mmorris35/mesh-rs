@@ -74,67 +74,67 @@ src/
 
 | # | Phase | Status | Plan |
 |---|-------|--------|------|
-| 1 | Foundation & Core Types | ⬜ Not Started | [phases/PHASE_1.md](phases/PHASE_1.md) |
-| 2 | Cryptographic Identity & Signing | ⬜ Not Started | [phases/PHASE_2.md](phases/PHASE_2.md) |
-| 3 | Storage Layer | ⬜ Not Started | [phases/PHASE_3.md](phases/PHASE_3.md) |
-| 4 | HTTP Endpoints & Wire Protocol | ⬜ Not Started | [phases/PHASE_4.md](phases/PHASE_4.md) |
-| 5 | Peer Management & Trust | ⬜ Not Started | [phases/PHASE_5.md](phases/PHASE_5.md) |
-| 6 | Publication & Revocation | ⬜ Not Started | [phases/PHASE_6.md](phases/PHASE_6.md) |
-| 7 | Federated Search | ⬜ Not Started | [phases/PHASE_7.md](phases/PHASE_7.md) |
-| 8 | MCP Tools & Integration | ⬜ Not Started | [phases/PHASE_8.md](phases/PHASE_8.md) |
+| 1 | Foundation & Core Types | ✅ Complete | [phases/PHASE_1.md](phases/PHASE_1.md) |
+| 2 | Cryptographic Identity & Signing | ✅ Complete | [phases/PHASE_2.md](phases/PHASE_2.md) |
+| 3 | Storage Layer | ✅ Complete | [phases/PHASE_3.md](phases/PHASE_3.md) |
+| 4 | HTTP Endpoints & Wire Protocol | ✅ Complete | [phases/PHASE_4.md](phases/PHASE_4.md) |
+| 5 | Peer Management & Trust | ✅ Complete | [phases/PHASE_5.md](phases/PHASE_5.md) |
+| 6 | Publication & Revocation | ✅ Complete | [phases/PHASE_6.md](phases/PHASE_6.md) |
+| 7 | Federated Search | ✅ Complete | [phases/PHASE_7.md](phases/PHASE_7.md) |
+| 8 | MCP Tools & Integration | ✅ Complete | [phases/PHASE_8.md](phases/PHASE_8.md) |
 
 ### Subtask Checklist
 
 #### Phase 1: Foundation & Core Types
-- [ ] 1.1.1: Crate setup (Cargo.toml, dependencies, .gitignore)
-- [ ] 1.1.2: Module skeleton & core types
-- [ ] 1.1.3: Error types
+- [x] 1.1.1: Crate setup (Cargo.toml, dependencies, .gitignore)
+- [x] 1.1.2: Module skeleton & core types
+- [x] 1.1.3: Error types
 
 #### Phase 2: Cryptographic Identity & Signing
-- [ ] 2.1.1: Ed25519 keypair generation & base58 node ID
-- [ ] 2.1.2: Identity document struct & self-signing
-- [ ] 2.2.1: RFC 8785 canonical JSON serialization
-- [ ] 2.2.2: Record signing & verification (lessons + checkpoints)
+- [x] 2.1.1: Ed25519 keypair generation & base58 node ID
+- [x] 2.1.2: Identity document struct & self-signing
+- [x] 2.2.1: RFC 8785 canonical JSON serialization
+- [x] 2.2.2: Record signing & verification (lessons + checkpoints)
 
 #### Phase 3: Storage Layer
-- [ ] 3.1.1: Schema migrations (visibility columns + new tables)
-- [ ] 3.1.2: Identity storage (mesh_identity CRUD)
-- [ ] 3.1.3: Peer & trust storage (mesh_peers CRUD)
-- [ ] 3.1.4: Remote records & revocations storage
+- [x] 3.1.1: Schema migrations (visibility columns + new tables)
+- [x] 3.1.2: Identity storage (mesh_identity CRUD)
+- [x] 3.1.3: Peer & trust storage (mesh_peers CRUD)
+- [x] 3.1.4: Remote records & revocations storage
 
 #### Phase 4: HTTP Endpoints & Wire Protocol
-- [ ] 4.1.1: MeshEnvelope & request/response types
-- [ ] 4.1.2: Axum router & shared state
-- [ ] 4.2.1: GET /mesh/v1/identity endpoint
-- [ ] 4.2.2: POST /mesh/v1/announce endpoint
-- [ ] 4.2.3: POST /mesh/v1/search endpoint
-- [ ] 4.2.4: GET /mesh/v1/peers endpoint
+- [x] 4.1.1: MeshEnvelope & request/response types
+- [x] 4.1.2: Axum router & shared state
+- [x] 4.2.1: GET /mesh/v1/identity endpoint
+- [x] 4.2.2: POST /mesh/v1/announce endpoint
+- [x] 4.2.3: POST /mesh/v1/search endpoint
+- [x] 4.2.4: GET /mesh/v1/peers endpoint
 
 #### Phase 5: Peer Management & Trust
-- [ ] 5.1.1: PeerManager (add/remove/list peers)
-- [ ] 5.1.2: TrustManager (binary trust for MVP)
-- [ ] 5.1.3: Peer identity verification
-- [ ] 5.1.4: Periodic health checks
+- [x] 5.1.1: PeerManager (add/remove/list peers)
+- [x] 5.1.2: TrustManager (binary trust for MVP)
+- [x] 5.1.3: Peer identity verification
+- [x] 5.1.4: Periodic health checks
 
 #### Phase 6: Publication & Revocation
-- [ ] 6.1.1: Publication flow (sign + announce to peers)
-- [ ] 6.1.2: Incoming announcement processing
-- [ ] 6.2.1: Revocation flow (sign + propagate)
-- [ ] 6.2.2: Incoming revocation processing
+- [x] 6.1.1: Publication flow (sign + announce to peers)
+- [x] 6.1.2: Incoming announcement processing
+- [x] 6.2.1: Revocation flow (sign + propagate)
+- [x] 6.2.2: Incoming revocation processing
 
 #### Phase 7: Federated Search
-- [ ] 7.1.1: Send search requests to peers
-- [ ] 7.1.2: Process incoming search requests
-- [ ] 7.1.3: Result merging & ranking
+- [x] 7.1.1: Send search requests to peers
+- [x] 7.1.2: Process incoming search requests
+- [x] 7.1.3: Result merging & ranking
 
 #### Phase 8: MCP Tools & Integration
-- [ ] 8.1.1: mesh_status & mesh_peers tools
-- [ ] 8.1.2: mesh_trust tool
-- [ ] 8.1.3: mesh_publish tool
-- [ ] 8.1.4: mesh_revoke tool
-- [ ] 8.1.5: mesh_search tool
-- [ ] 8.2.1: MeshNode integration struct
-- [ ] 8.2.2: End-to-end federation test
+- [x] 8.1.1: mesh_status & mesh_peers tools
+- [x] 8.1.2: mesh_trust tool
+- [x] 8.1.3: mesh_publish tool
+- [x] 8.1.4: mesh_revoke tool
+- [x] 8.1.5: mesh_search tool
+- [x] 8.2.1: MeshNode integration struct
+- [x] 8.2.2: End-to-end federation test
 
 ## Technology Stack
 

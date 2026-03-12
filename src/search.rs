@@ -228,9 +228,10 @@ impl FederatedSearch {
         let mut merged = merge_results(local_results, peer_results);
 
         // Apply limit
+        let total = merged.len();
         merged.truncate(effective_limit);
 
-        let truncated = merged.len() >= effective_limit;
+        let truncated = total > effective_limit;
 
         Ok(SearchResponse {
             request_id,

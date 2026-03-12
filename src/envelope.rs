@@ -40,7 +40,10 @@ impl MeshEnvelope {
     /// canonicalizes, signs with Ed25519, and stores the base64-encoded signature.
     pub fn sign(&mut self, identity: &NodeIdentity) -> MeshResult<()> {
         let mut value = serde_json::to_value(&*self)?;
-        value.as_object_mut().unwrap().remove("signature");
+        value
+            .as_object_mut()
+            .expect("struct serializes to object")
+            .remove("signature");
         let canonical = canonicalize(&value)?;
         let sig = identity.signing_key().sign(canonical.as_bytes());
         self.signature = Some(BASE64.encode(sig.to_bytes()));
@@ -55,7 +58,10 @@ impl MeshEnvelope {
         let sig_b64 = self.signature.as_ref().ok_or(MeshError::InvalidSignature)?;
 
         let mut value = serde_json::to_value(self)?;
-        value.as_object_mut().unwrap().remove("signature");
+        value
+            .as_object_mut()
+            .expect("struct serializes to object")
+            .remove("signature");
         let canonical = canonicalize(&value)?;
 
         let sig_bytes = BASE64
